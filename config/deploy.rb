@@ -7,7 +7,7 @@ set :application, "Venuespy"
 # Deployment From Source Code Management (SCM)
 set :scm, :git
 set :scm_username, "polar"
-set :repository,  "git@github.com:VenueSpy/ftppush-app.git"
+set :repository,  "git@github.com:polar/ftp-push.git"
 set :git_enable_submodules, 1
 
 # If we need a SSH Tunnel to get out or get to the remote server.
