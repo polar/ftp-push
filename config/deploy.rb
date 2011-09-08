@@ -7,7 +7,7 @@ set :application, "Venuespy"
 # Deployment From Source Code Management (SCM)
 set :scm, :git
 set :scm_username, "polar"
-set :repository,  "git@github.com:polar/ftp-push.git"
+set :repository,  "git://github.com/polar/ftp-push.git"
 set :git_enable_submodules, 1
 
 # If we need a SSH Tunnel to get out or get to the remote server.
@@ -39,7 +39,7 @@ server "ftppush@venuespy.com", :web, :app, :db, :primary => true
 #   end
 # end
 
-set :unicorn_binary, "/usr/bin/unicorn"
+set :unicorn_binary, "/var/lib/gems/1.8/bin/unicorn"
 set :unicorn_config, "#{current_path}/config/unicorn.rb"
 set :unicorn_pid, "#{current_path}/tmp/pids/unicorn.pid"
 
@@ -48,13 +48,13 @@ namespace :deploy do
     run "cd #{current_path} && #{try_sudo} #{unicorn_binary} -c #{unicorn_config} -E #{rails_env} -D"
   end
   task :stop, :roles => :app, :except => { :no_release => true } do
-    run "#{try_sudo} kill `cat #{unicorn_pid}`"
+    run "test -e #{unicorn_pid} && #{try_sudo} kill `cat #{unicorn_pid}` || true"
   end
   task :graceful_stop, :roles => :app, :except => { :no_release => true } do
-    run "#{try_sudo} kill -s QUIT `cat #{unicorn_pid}`"
+    run "test -e #{unicorn_pid} && #{try_sudo} kill -s QUIT `cat #{unicorn_pid}` || true"
   end
   task :reload, :roles => :app, :except => { :no_release => true } do
-    run "#{try_sudo} kill -s USR2 `cat #{unicorn_pid}`"
+    run "test -e #{unicorn_pid} && #{try_sudo} kill -s USR2 `cat #{unicorn_pid}` || true"
   end
   task :restart, :roles => :app, :except => { :no_release => true } do
     stop
