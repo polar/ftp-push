@@ -1,0 +1,31 @@
+<% title "Camera" %>
+
+<p>
+  <strong>Name:</strong><br />
+  <%= @camera.name %>
+</p>
+<p>
+  <strong>Description:</strong><br />
+  <%= @camera.description %>
+</p>
+<p>
+  <strong>Ftp Userid:</strong><br />
+  <%= @camera.ftp_userid %>
+</p>
+<p>
+  <strong>Ftp Upload Directory:</strong><br />
+  <%= @camera.ftp_upload_directory %>
+</p>
+<p>
+  <strong>Ftp Sha1 Password:</strong><br />
+  <%= @camera.ftp_sha1_password %>
+</p>
+<p>
+  <strong>
+  <%= link_to "View Camera", monitor_path( :id => @camera.ftp_userid ) %>
+  </strong>
+<p>
+  <%= link_to "Edit", edit_camera_path(@camera) %> |
+  <%= link_to "Destroy", @camera, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", cameras_path %>
+</p>

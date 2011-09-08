@@ -1,0 +1,15 @@
+one:
+  name: MyString
+  description: MyText
+  ftp_userid: MyString
+  ftp_upload_directory: MyString
+  password: MyString
+  password_confirmation: MyString
+
+two:
+  name: MyString
+  description: MyText
+  ftp_userid: MyString
+  ftp_upload_directory: MyString
+  password: MyString
+  password_confirmation: MyString

@@ -1,0 +1,32 @@
+<%= form_for @camera do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_area :description %>
+  </p>
+  <p>
+    <%= f.label :ftp_userid %><br />
+    <%= f.text_field :ftp_userid %>
+  </p>
+  <p>
+    <%= f.label :ftp_upload_directory %><br />
+    <%= f.text_field :ftp_upload_directory %>
+  </p>
+  <p>
+    <%= f.label :password %><br />
+    <%= f.password_field :password %>
+  </p>
+  <p>
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation %>
+  </p>
+  <p>
+    <%= f.label :ftp_sha1_password %><br />
+    <%= f.text_field :ftp_sha1_password %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>
