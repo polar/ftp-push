@@ -5,6 +5,8 @@
 # What ports/sockets to listen on, and what options for them.
 listen "/tmp/ftppush.sock", :tcp_nodelay => true, :backlog => 1000
 
+pid '/home/ftppush/current/tmp/pids/unicorn.pid'
+
 working_directory '/home/ftppush/current'
 
 # What the timeout for killing busy workers is, in seconds
