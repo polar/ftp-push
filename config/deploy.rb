@@ -60,5 +60,4 @@ namespace :deploy do
     stop
     start
   end
-end                                                                                    53,1          Bot
-                                                                               29,1          70%
+end                                                                                
