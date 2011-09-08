@@ -46,4 +46,14 @@ Venuespy::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+  
+  
+    # Configure the name of the base FTP upload directory. 
+    # This directory houses the camera directories in which they upload
+    # there image files. A directory gets created here if needed for a
+    # particular FTP user for each camera:
+    #  "#{config.ftp_upload_directory}/#{Camera.ftp_userid}"
+    # This config parameter may be overridden in different deployment environments.
+    # This directory must be writable, so that directories may be created in it.
+    config.ftp_upload_directory = "/home/ftppush/users"
 end
