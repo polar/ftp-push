@@ -14,8 +14,8 @@ gem 'unicorn'
 gem 'capistrano'
 
 # To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
-gem 'ruby-debug', :group => :development
-gem 'ruby-debug-ide', :group => :development
+#gem 'ruby-debug', :group => :development
+#gem 'ruby-debug-ide', :group => :development
 
 
 gem 'nifty-generators', '>= 0.4.0', :group => :development

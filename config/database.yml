@@ -33,8 +33,8 @@ test:
 production:
   adapter: mysql2
   host: localhost
-  username: root
-  password: Baconbits123
+  username: venuespy
+  password: venuespy
   database: vs_db_ftppush
   pool: 5
   timeout: 5000
