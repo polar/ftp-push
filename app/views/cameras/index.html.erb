@@ -5,12 +5,14 @@
     <th>Name</th>
     <th>Description</th>
     <th>Ftp Userid</th>
+    <th>Owner</th>
   </tr>
   <% for camera in @cameras %>
     <tr>
       <td><%= camera.name %></td>
       <td><%= camera.description %></td>
       <td><%= camera.ftp_userid %></td>
+      <td><%= camera.user.email %></td>
       <td><%= link_to "View", monitor_path( :id => camera.ftp_userid ) %></td>
       <td><%= link_to "Info", camera %></td>
       <td><%= link_to "Edit", edit_camera_path(camera) %></td>

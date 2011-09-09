@@ -20,6 +20,8 @@ class CamerasController < ApplicationController
 
   def create
     @camera = Camera.new(params[:camera])
+    @camera.user = current_user
+    
     if @camera.save
       redirect_to @camera, :notice => "Successfully created camera."
     else

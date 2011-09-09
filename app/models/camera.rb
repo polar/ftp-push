@@ -1,6 +1,8 @@
 class Camera < ActiveRecord::Base
   require "digest/sha1"
   
+  belongs_to :user
+  
   FTP_UPLOAD_BASE = Venuespy::Application.config.ftp_upload_directory
   
   # These attributes are not saved in the database.
