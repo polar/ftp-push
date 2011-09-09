@@ -39,6 +39,13 @@ server "ftppush@venuespy.com", :web, :app, :db, :primary => true
 #   end
 # end
 
+before :"deploy:symlink", :"deploy:assets";
+
+desc "Compile asets"
+task :assets do
+  run "cd #{release_path}; RAILS_ENV=#{rails_env} /var/lib/gems/1.8/bin/bundle exec rake assets:precompile"
+end
+
 set :unicorn_binary, "/var/lib/gems/1.8/bin/unicorn"
 set :unicorn_config, "#{current_path}/config/unicorn.rb"
 set :unicorn_pid, "#{current_path}/tmp/pids/unicorn.pid"
@@ -61,6 +68,6 @@ namespace :deploy do
     start
   end
   task :bundle, :roles => :app do
-    run "cd #{current_path} && #{try_sudo} /var/lib/gems/1.8/bin/bundle install"
+    run "cd #{current_path} && #{try_sudo} RAILS_ENV=#{rails_env} /var/lib/gems/1.8/bin/bundle install"
   end
 end                                                                                
