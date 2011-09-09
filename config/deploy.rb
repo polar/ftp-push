@@ -60,4 +60,7 @@ namespace :deploy do
     stop
     start
   end
+  task :bundle, :roles => :app do
+    run "cd #{current_path} && #{try_sudo} /var/lib/gems/1.8/bin/bundle install"
+  end
 end                                                                                
