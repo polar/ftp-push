@@ -32,6 +32,29 @@ out of a camera's upload directory.
      
      config/unicorn.rb
      
+== Server Components
+
+This section contains a suitable specification of currently what is needed
+to get this application up an running and installing all the Ruby Gems
+that are needed.
+
+   apt-get install
+                build-essential,
+                vsftpd,
+                mysql-server, 
+                mysql-client, 
+                libmysql-client-dev,
+                nginx,
+                ruby-dev,
+                rake,
+                nodejs,
+                libxml2-dev
+                libxslt-dev
+                
+There may be more. It's a running list. The "-dev" libraries are needed
+because the Ruby Gems that get installed sometimes need to be compiled
+against these libraies.
+
 == Server Specific Configuration
 
 This section contains the various configuration files that should be used
