@@ -10,7 +10,7 @@
   </p>
   <p>
     <%= f.label :ftp_userid, "FTP Userid (must be unique)" %><br />
-    <%= f.text_field :ftp_userid %>
+    <%= f.text_field :ftp_userid, :readonly => @camera.id != nil %>
   </p>
   <p>
     <%= f.label :password, "FTP Password" %><br />
