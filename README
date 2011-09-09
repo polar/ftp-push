@@ -14,7 +14,51 @@ out of a camera's upload directory.
  Getting the latest image
    http://host/monitors/<cameraid>/current
 
+== Specific Application Configuration
 
+* config.ftp_upload_directory = <name of Vsftpd virtual users directory>
+     This is where you specify the local directory where this application
+     will create (or use) directories for each camera.
+
+     Defined in:
+       environment.rb
+       environments/production.rb -- overrides above.
+
+* Unicorn
+     This is the application server that gets handoffs from the web server
+     and processes the requests.
+     
+     config/unicorn.rb
+     
+== Server Specific Configuration
+
+This section contains the various configuration files that should be used
+for various deployments. There are no scripts for installing them yet,
+nor should there be by anything in this rails application. These services
+are server specific. Therefore, these configuration files serve as a reference.
+
+* Nginx
+     Nginx is the fast simple webserver that hands off requests
+     to the application server Unicorn, which runs this Rails application. 
+     Th nginx service run by the Linux platform.
+     We don't use Nginx or Unicorn in the development environment
+
+     host/production/etc/nginx/nginx.conf
+     
+* VSFTPD
+     Vsftpd is the FTP server, which is needed to pick up the pictures from
+     the cameras. It must be integrated in such a way that it allows "virtual"
+     users that are authenticated from our database "cameras" table, and that
+     we have corresponding directories on the file system for each user. This
+     configuration involves a configuration for the vsftpd server itself, and
+     the pam_mysql PAM module, used to authenticate the users from our 
+     database. This service is run by the Linux platform.
+     
+     host/development/etc/vsftpd.conf
+     host/development/etc/pam.d/vsfptd
+     
+     host/production/etc/vsftpd.conf
+     host/production/etc/pam.d/vsftpd
 
 == Getting Started (with Rails)
 

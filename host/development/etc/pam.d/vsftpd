@@ -1,0 +1,13 @@
+auth required /lib/security/pam_mysql.so user=venuespy passwd=venuespy host=localhost db=vs_db_develop table=cameras usercolumn=ftp_userid passwdcolumn=ftp_sha1_password crypt=4   
+account required /lib/security/pam_mysql.so user=venuespy passwd=venuespy host=localhost db=vs_db_develop table=cameras usercolumn=ftp_userid passwdcolumn=ftp_sha1_password crypt=4 
+
+# Standard behaviour for ftpd(8).
+#auth	required	pam_listfile.so item=user sense=deny file=/etc/ftpusers onerr=succeed
+
+# Note: vsftpd handles anonymous logins on its own. Do not enable pam_ftp.so.
+
+# Standard pam includes
+#@include common-account
+#@include common-session
+#@include common-auth
+#auth	required	pam_shells.so
