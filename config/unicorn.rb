@@ -16,7 +16,7 @@ timeout 60
 preload_app false
 
 # How many worker processes
-worker_processes 8
+worker_processes 2
 
 # What to do before we fork a worker
 before_fork do |server, worker|
