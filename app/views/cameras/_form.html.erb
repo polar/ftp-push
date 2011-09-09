@@ -1,7 +1,7 @@
 <%= form_for @camera do |f| %>
   <%= f.error_messages %>
   <p>
-    <%= f.label :name %><br />
+    <%= f.label :name  %><br />
     <%= f.text_field :name %>
   </p>
   <p>
@@ -9,15 +9,15 @@
     <%= f.text_area :description %>
   </p>
   <p>
-    <%= f.label :ftp_userid %><br />
+    <%= f.label :ftp_userid, "FTP Userid (must be unique)" %><br />
     <%= f.text_field :ftp_userid %>
   </p>
   <p>
-    <%= f.label :password %><br />
+    <%= f.label :password, "FTP Password" %><br />
     <%= f.password_field :password %>
   </p>
   <p>
-    <%= f.label :password_confirmation %><br />
+    <%= f.label :password_confirmation, "FTP Password Confirmation" %><br />
     <%= f.password_field :password_confirmation %>
   </p>
   <p><%= f.submit %></p>

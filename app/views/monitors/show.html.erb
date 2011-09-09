@@ -7,3 +7,5 @@ var imageRoller = new ImageRoller(2000);
 <img id="vs_image_roller" class="vs_image_roller" 
      src='<%= "#{@camera.ftp_userid}/current" %>' onLoad='imageRoller.start(this)'/>
 </div>
+
+<p><%= link_to "Info", @camera %>|<%= link_to "View All", cameras_path %></p>
