@@ -7,17 +7,14 @@
    * Note: This may not work correctly if your url pays attention to 
    * HTML args (after the "?").
    */
-  var ImageRoller = Class.create();
+  var ImageRoller = function( refreshTime ) {
+       this._refreshTime = refreshTime;
+    };
   
   ImageRoller.prototype = {
   
     _imageUrl    : "",
-    _refreshTime : 1000,
     _element     : 0,
-    
-    initialize : function (refreshTime) {
-       this._refreshTime = refreshTime;
-    },
     
     /**
      * This function starts the viewer on a particular image element, of
