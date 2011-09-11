@@ -25,6 +25,10 @@
   <%= @camera.ftp_sha1_password %>
 </p>
 <p>
+  <strong>Refresh Rate (miliseconds):</strong><br />
+  <%= @camera.refresh_rate %>
+</p>
+<p>
   <strong>
   <%= link_to "View Camera", monitor_path( :id => @camera.ftp_userid ) %>
   </strong>

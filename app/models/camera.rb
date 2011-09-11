@@ -27,7 +27,7 @@ class Camera < ActiveRecord::Base
   def validate_password_confirmation
     # If id == nil then we haven't created it yet and we need a password.
     # Otherwise, we leave it unchanged.
-    if password.empty? && self.id == nil
+    if (password == nil || password.empty?) && self.id == nil
       self.errors.add(:password, "cannot be empty")
     end
     if password != password_confirmation
@@ -68,7 +68,7 @@ class Camera < ActiveRecord::Base
   def create_libpam_mysql_password
     # This is for the following pam_mysql specification: 
     # crypt=4 user=camera usercolumn=ftp_userid passwordcolumn=ftp_sha1_password
-    self.ftp_sha1_password = Digest::SHA1.hexdigest(password)
+    self.ftp_sha1_password = Digest::SHA1.hexdigest(password) if password != nil
   end
   
 end

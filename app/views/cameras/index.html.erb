@@ -5,6 +5,7 @@
     <th>Name</th>
     <th>Description</th>
     <th>Ftp Userid</th>
+    <th>Refresh Rate</th>
     <th>Owner</th>
   </tr>
   <% for camera in @cameras %>
@@ -12,6 +13,7 @@
       <td><%= camera.name %></td>
       <td><%= camera.description %></td>
       <td><%= camera.ftp_userid %></td>
+      <td><%= camera.refresh_rate %> ms</td>
       <td><%= camera.user.email %></td>
       <td><%= link_to "View", monitor_path( :id => camera.ftp_userid ) %></td>
       <td><%= link_to "Info", camera %></td>

@@ -13,6 +13,10 @@
     <%= f.text_field :ftp_userid, :readonly => @camera.id != nil %>
   </p>
   <p>
+    <%= f.label :refresh_rate, "Refresh Rate (miliseconds)" %><br />
+    <%= f.text_field :refresh_rate %>
+  </p>
+  <p>
     <%= f.label :password, "FTP Password" %><br />
     <%= f.password_field :password %>
   </p>

@@ -16,6 +16,7 @@ class CamerasController < ApplicationController
 
   def new
     @camera = Camera.new
+    @camera.refresh_rate = 2000
   end
 
   def create
