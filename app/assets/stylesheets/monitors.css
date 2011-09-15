@@ -82,12 +82,17 @@ a {
 }
 
 .vs_image_roller  {
-    display: block;
-    margin: auto auto;
-    height: 240px;
-    width: 320px;
+  display: block;
+  margin: auto auto;
+  height: 480px;
+  width: 640px;
   background-color: #FFF;
   border: solid 2px red;
+}
+
+.vs_image_roller img {
+    height: 480px;
+    width: 640px;
 }
 
 #user_nav {

@@ -6,36 +6,64 @@
    *  a current timestamp in milliseconds. 
    * Note: This may not work correctly if your url pays attention to 
    * HTML args (after the "?").
+   * 
+   * It expects the following set up in the DOM.
+   *  <div id="feed-1">
+   *    <div class="feed-image" src="feed-url">
+   *      <img src="initial-url" onload="new ImageRoller('feed-1',"feed-image",2000);">
+   *    </div>
+   *  </div>
    */
-  var ImageRoller = function( refreshTime ) {
-       this._refreshTime = refreshTime;
+  var ImageRoller = function( feedID, feedImageClassName, refreshRate) {
+       this.refreshRate = refreshRate;
+       this.feedImageClassName = feedImageClassName;
+       this.feedID = feedID;
     };
-  
-  ImageRoller.prototype = {
-  
-    _imageUrl    : "",
-    _element     : 0,
     
-    /**
-     * This function starts the viewer on a particular image element, of
-     * which has its "src" property set.
-     * An application would be:
-     * <script ...>imageRoller = new ImageRoller(400);</script>
-     * <img src='...url..." onLoad='imageRoller.start(this)'/>
-     */
-    start : function (imageElement) {
-       this._element = imageElement;
-       if (this._imageUrl == "") {
-         this._imageUrl = imageElement.src;
-       };
-       // Javascript cannot handle the scope associated with just giving
-       // "this.refreshImage" here. We have to give it a function scope,
-       // and we cannot "this" inside as it refers to the immediate object
-       // encapsulating the anonymous function.
-       var me = this;
-       setTimeout( function(){me._refreshImage();}, this._refreshTime);
+  ImageRoller.prototype = {
+    
+    // If errorImageURL is to be set, it must be set before start() is called.
+    errorImageURL : null,
+    
+    start : function() {
+      this.fetchFeed(this.feedID,this.feedImageClassName,this.refreshRate,this.errorImageURL);
     },
-    _refreshImage : function () {
-       this._element.src = this._imageUrl + "?" + new Date().getTime();
+  
+    /*
+     * This function must be called by name from the prototype.
+     * It does not reference any part of the class, as that would cause
+     * garbage collection and reference chains.
+     */
+    fetchFeed : function(feedID,feedImageClassName,refreshRate,errorImageURL) {
+	var feedElement = $('div#'+feedID);
+	var feedImage = $('div#'+feedID+' div.'+ feedImageClassName);
+	var image = new Image();
+	feedURL = feedImage.attr('src');
+	feedTime = (new Date()).getTime();
+	image.onload = function() {
+	  // We just loaded a new image. Get rid of the old one and put it in the
+	  // container div.
+	  $('div#'+feedID+' div.'+ feedImageClassName).empty().append(image);
+	  var duration = Math.max(refreshRate - ((new Date()).getTime() - feedTime), 0);
+	  if ($('div#'+feedID).length > 0) {
+	    var arg1 = "'"+feedID+"'";
+	    var arg2 = "'"+feedImageClassName+"'";
+	    var arg3 = refreshRate;
+	    var arg4 = errorImageURL ? "'"+errorImageURL+"'" : "null";
+	    setTimeout("ImageRoller.prototype.fetchFeed("+arg1+","+arg2+","+arg3+","+arg4+")", duration);
+	  }
+	};
+	image.onerror = function() {
+	  $('div#'+feedID+' div.'+ feedImageClassName).empty().append("<img src='images/testPattern.jpg'/>");
+	  
+	  if ($('div#'+feedID).length > 0) {
+	    var arg1 = "'"+feedID+"'";
+	    var arg2 = "'"+feedImageClassName+"'";
+	    var arg3 = refreshRate;
+	    var arg4 = errorImageURL ? "'"+errorImageURL+"'" : "null";
+	    setTimeout("ImageRoller.prototype.fetchFeed("+arg1+","+arg2+","+arg3+","+arg4+")", refreshRate);
+	  }
+	};
+	image.src = feedURL + '?' + feedTime;
     }
   };

@@ -1,11 +1,27 @@
 <% title "#{@camera.name}" %>
 
 <script type="text/javascript">
-var imageRoller = new ImageRoller(<%= (@camera.refresh_rate != nil && @camera.refresh_rate > 0) ? @camera.refresh_rate : 2000 %>);
+/*
+ * First argument names the <div> by its id. The second argument
+ * names the class of its child <div>. The third argument
+ * is the frame refresh rate in milliseconds. The image will be
+ * contained in the div in which the class is named.
+ * 
+ * The imageRoller gets started upon the load of the initial image.
+ * The initial image is discarded when started. 
+ */
+var imageRoller = new ImageRoller("vs_image_roller_box", "vs_image_roller", 
+                <%= (@camera.refresh_rate != nil && @camera.refresh_rate > 0) ? @camera.refresh_rate : 2000 %>);
+// If errorImageURL is to be set, it must be set before start() is called.
+imageRoller.errorImageURL= "images/Test_Pattern.jpg";
 </script>
-<div id="vs_image_roller_box" class="vs_image_roller_box">
-<img id="vs_image_roller" class="vs_image_roller" 
-     src='<%= "#{@camera.ftp_userid}/current" %>' onLoad='imageRoller.start(this)'/>
-</div>
 
+<div id="vs_image_roller_box">
+  <div class="vs_image_roller"
+       src='<%= "#{@camera.ftp_userid}/current" %>'>
+     <img 
+       src='<%= "#{@camera.ftp_userid}/current" %>' 
+       onload='imageRoller.start();'/>
+  </div>
+</div>
 <p><%= link_to "Info", @camera %>|<%= link_to "View All", cameras_path %></p>
