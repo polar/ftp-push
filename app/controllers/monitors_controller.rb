@@ -46,6 +46,6 @@ class MonitorsController < ApplicationController
   
   def send_default_picture
       #TODO Default Picture
-    send_file "public/images/Test_Pattern.jpg", :type => 'image/jpeg', :disposition => 'inline'
+    send_file "assets/images/Test_Pattern.jpg", :type => 'image/jpeg', :disposition => 'inline'
   end
 end

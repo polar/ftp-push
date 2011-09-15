@@ -12,15 +12,13 @@
  */
 var imageRoller = new ImageRoller("vs_image_roller_box", "vs_image_roller", 
                 <%= (@camera.refresh_rate != nil && @camera.refresh_rate > 0) ? @camera.refresh_rate : 2000 %>);
-// If errorImageURL is to be set, it must be set before start() is called.
-imageRoller.errorImageURL= "images/Test_Pattern.jpg";
 </script>
 
 <div id="vs_image_roller_box">
   <div class="vs_image_roller"
-       src='<%= "#{@camera.ftp_userid}/current" %>'>
+       src='<%= url_for :action => "current", :id => "#{@camera.ftp_userid}" %>'>
      <img 
-       src='<%= "#{@camera.ftp_userid}/current" %>' 
+       src='<%= url_for :action => "current", :id => "#{@camera.ftp_userid}" %>'
        onload='imageRoller.start();'/>
   </div>
 </div>
