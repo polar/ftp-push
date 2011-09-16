@@ -1,15 +1,25 @@
   /**
    * ImageRoller
-   *  This class is an object that contantly refreshs an image
-   *  avoiding the browser cache by adding a bogus argument to the
-   *  src url for loading the image. It hopefully is unique by adding
-   *  a current timestamp in milliseconds. 
-   * Note: This may not work correctly if your url pays attention to 
-   * HTML args (after the "?").
+   * 
+   * Author: Polar Humenn (C) 2011
+   * 
+   * This script requires JQuery.
+   * 
+   * This class is an object that contantly refreshs an image
+   * from an image URL. Noting that the image may change behind
+   * the URL, most browswers will cache the image and subvert
+   * the next download. This approach avoids the browser cache by adding 
+   * a bogus, but unique, argument, i.e. the current time stamp
+   * in milliseconds, to the src url for loading the image. 
+   * 
+   * Note: This may not work correctly if your server behind
+   * the url pays attention to HTML GET args (after the "?").
+   * 
+   * How to use:
    * 
    * The javascript:
    * 
-   *    var imageRoller = new ImageRoller('feed-1', 'feed-image', 2000);
+   *  var imageRoller = new ImageRoller('feed-1', 'feed-image', 2000);
    * 
    * expects the following set up in the DOM.
    *
@@ -19,9 +29,9 @@
    *    </div>
    *  </div>
    * 
-   * Of course "imageRoller.star();" can go anywhere whenever when you 
+   * Of course "imageRoller.start();" may go anywhere whenever when you 
    * you want to start rolling the images. But onload of the initial
-   * image gives us a nice start and an convient event.
+   * image gives us a nice start and a convient event.
    */
   var ImageRoller = function( feedID, feedImageClassName, refreshRate) {
        this.refreshRate = refreshRate;
@@ -40,25 +50,35 @@
       if (this.errorImageURL == null) {
 	this.errorImageURL = this._defaultErrorImageURL;
       };
-      this.fetchFeed(this.feedID,this.feedImageClassName,this.refreshRate,this.errorImageURL);
+      this.fetchFeed(this.feedID, this.feedImageClassName ,this.refreshRate, this.errorImageURL);
     },
   
     /*
      * This function must be called by name from the prototype.
      * It does not reference any part of the instance of the class, 
-     * as that would cause garbage collection and recursive upward
-     * reference chains.
+     * or the function execution context as that would prevent
+     * garbage collection of the images and keep upwardly recursive
+     * reference chains of execution contexts. By actually forming a string
+     * for the setTimeOut function call, we eliminate all references to 
+     * any objects freeing up the function execution context for the 
+     * garbage collector.
      */
-    fetchFeed : function(feedID,feedImageClassName,refreshRate,errorImageURL) {
+    fetchFeed : function(feedID, feedImageClassName, refreshRate, errorImageURL) {
 	var feedElement = $('div#'+feedID);
-	var feedImage = $('div#'+feedID+' div.'+ feedImageClassName);
-	var image = new Image();
-	feedURL = feedImage.attr('src');
+	var feedImage   = $('div#'+feedID+' div.'+ feedImageClassName);
+	var image       = new Image();
+	
+	feedURL  = feedImage.attr('src');
 	feedTime = (new Date()).getTime();
+	
 	image.onload = function() {
 	  // We just loaded a new image. Get rid of the old one and put it in the
-	  // container div.
+	  // container div. The empty() call allows the old image to be GC'd.
 	  $('div#'+feedID+' div.'+ feedImageClassName).empty().append(image);
+	  
+	  // Since the last download took some time, calculate the time needed to
+	  // maintain the refreshRate.
+	  
 	  var duration = Math.max(refreshRate - ((new Date()).getTime() - feedTime), 0);
 	  if ($('div#'+feedID).length > 0) {
 	    var arg1 = "'"+feedID+"'";
@@ -68,6 +88,7 @@
 	    setTimeout("ImageRoller.prototype.fetchFeed("+arg1+","+arg2+","+arg3+","+arg4+")", duration);
 	  };
 	};
+	
 	image.onerror = function() {
 	  $('div#'+feedID+' div.'+ feedImageClassName).empty().append(
 	    "<img src='"+errorImageURL+"' alt='Problem with downloading next frame'/>");
@@ -80,7 +101,8 @@
 	    setTimeout("ImageRoller.prototype.fetchFeed("+arg1+","+arg2+","+arg3+","+arg4+")", refreshRate);
 	  };
 	};
+	
+	// Finally, load the image, using the bogus argument.
 	image.src = feedURL + '?' + feedTime;
-	//alert(image.src);
     }
   };
